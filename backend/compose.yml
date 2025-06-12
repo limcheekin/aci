@@ -126,7 +126,7 @@ services:
       - /home/limcheekin/docker/volumes/aci/backend/evals:/workdir/evals
       - /home/limcheekin/docker/volumes/aci/backend/alembic.ini:/workdir/alembic.ini
       # Mocks out the propelauth_fastapi module in server container to bypass token validation in local development
-      - ./mock/propelauth_fastapi_mock.py:/workdir/.venv/lib/python3.12/site-packages/propelauth_fastapi/__init__.py
+      - /home/limcheekin/docker/volumes/aci/backend/mock/propelauth_fastapi_mock.py:/workdir/.venv/lib/python3.12/site-packages/propelauth_fastapi/__init__.py
     command: >
       /bin/sh -c "alembic upgrade head && tail -f /dev/null"
     depends_on:
