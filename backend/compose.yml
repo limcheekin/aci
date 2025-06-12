@@ -13,7 +13,7 @@ services:
       POSTGRES_PASSWORD: password
       POSTGRES_DB: local_db
     ports:
-      - "5432:5432"
+      - "5678:5678"
     restart: no
 
   test-db:
@@ -58,7 +58,7 @@ services:
       context: .
       dockerfile: Dockerfile.server
     healthcheck:
-      test: ["CMD-SHELL", "curl localhost:8000/v1/health"]
+      test: ["CMD-SHELL", "curl localhost:8887/v1/health"]
       interval: 10s
       retries: 5
       start_period: 3s
@@ -72,7 +72,7 @@ services:
       # Mocks out the propelauth_fastapi module in server container to bypass token validation in local development
       - ./mock/propelauth_fastapi_mock.py:/workdir/.venv/lib/python3.12/site-packages/propelauth_fastapi/__init__.py
     ports:
-      - "8000:8000"
+      - "8887:8000"
     # this overrides the default CMD specified in the Dockerfile, use this for local development
     command: uvicorn aci.server.main:app --proxy-headers --forwarded-allow-ips=* --host 0.0.0.0 --port 8000 --reload --no-access-log
     depends_on:
